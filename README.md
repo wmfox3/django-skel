@@ -42,17 +42,21 @@ project, so be sure to read them before using this boilerplate.
 Install
 =======
 
-django-skel currently supports Django 1.5. To create a new django-skel base
-project, run the following command (this assumes you have Django 1.5 installed
-already):
+django-skel currently supports Django 1.8. To create a new django-skel base
+project, create a virtual environment, activate it and install Django 1.8.
+This assumes you are using virtualenvwrapper:
+(see http://virtualenvwrapper.readthedocs.org/en/latest/index.html)
 
-    $ django-admin.py startproject --template=https://github.com/rdegges/django-skel/zipball/master woot
-    $ heroku config:add DJANGO_SETTINGS_MODULE=myproject.settings.prod
+    $ mkvirtualenv env
+    (env) $ pip install Django==1.8
+
+    (env) $ django-admin.py startproject --template=https://github.com/wmfox3/django-skel/zipball/1.8 woot
+    (env) $ heroku config:add DJANGO_SETTINGS_MODULE=myproject.settings.prod
 
 
-Where ``woot`` is the name of the project you'd like to create.
+Where  ``env`` is the environment and ``woot`` is the name of the project you'd like to create.
 
-This is possible because Django 1.5's ``startproject`` command allows you to
+This is possible because Django 1.8's ``startproject`` command allows you to
 fetch a project template over HTTP (which is what we're doing here).
 
 While not strictly required, it is also recommended to do
@@ -62,5 +66,38 @@ While not strictly required, it is also recommended to do
 The production settings pull SECRET_KEY from environment but fallbacks
 to a value which is generated mainly for development environment.
 
-This setup allows you to easily keep your site in a public repo if you so 
+This setup allows you to easily keep your site in a public repo if you so
 wish without causing opening a route to attack your Django passwords.
+
+CD to the project directory and remove the unnecessary README.md and docs directory
+
+    (env) $ cd woot
+    (env) $ rm -rf docs README.md
+
+Create your first app:
+
+    (env) $ $ mkdir woot/apps/myapp
+    (env) $ $ django-admin.py startapp myapp woot/apps/myapp
+
+Now's a good time to initialize the git repository:
+
+    (env) $ $ git init
+    (env) Initialized empty Git repository in /home/rdegges/Code/ex/woot/.git/
+    (env) $ git add .; git commit -m 'First commit using django-skel!'
+    ...
+
+Install the development requirements:
+
+    (env) $ pip install -r reqs/dev.txt
+
+Initialize the Django database (Django 1.8 uses migrate):
+
+    (env) $ python manage.py migrate
+
+Install the default Bower components:
+
+    (env) $ python manage.py bower install
+
+Start the development server and visit your home page at http://127.0.0.1:8000/:
+
+    (env) $ python manage.py runserver
