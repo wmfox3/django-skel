@@ -273,3 +273,15 @@ COMPRESS_JS_FILTERS = [
     'compressor.filters.template.TemplateFilter',
 ]
 ########## END COMPRESSION CONFIGURATION
+
+########## BOWER CONFIGURATION
+# See: https://django-bower.readthedocs.org/en/latest/installation.html
+
+BOWER_PATH = '/usr/local/bin/bower'
+
+BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'static'))
+
+BOWER_INSTALLED_APPS = (
+    'bootstrap',
+)
+########## END BOWER CONFIGURATION
