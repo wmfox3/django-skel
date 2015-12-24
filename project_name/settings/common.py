@@ -106,6 +106,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
+    'djangobower.finders.BowerFinder',
 )
 ########## END STATIC FILE CONFIGURATION
 
@@ -196,6 +197,9 @@ THIRD_PARTY_APPS = (
 
     # Asynchronous task queue:
     'djcelery',
+
+    # Bower package manager
+    'djangobower',
 )
 
 LOCAL_APPS = (
