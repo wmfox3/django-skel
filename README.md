@@ -1,25 +1,25 @@
 django-skel
 ===========
 
-A modern Django (1.5) project skeleton.
-
-![A fancy Django project skeleton](https://github.com/rdegges/django-skel/raw/master/docs/source/_static/skel.jpg)
-
+A modern Django (1.8) project skeleton forked from the excellent work of Randall Degges.
 
 Meta
 ====
 
-* author: Randall Degges
-* email:  rdegges@gmail.com
+* author: wmfox3
+* email:  wmfox3@gmail.com
 * status: maintained, in development
 * notes:  Have feedback? Please send me an email. This project is still in its
-          infancy, and will be changing rapidly.
+          infancy.
 
 
-Purpose
+Background
 =======
 
-For background, see: http://rdegges.com/deploying-django
+For background, see Randall Degges' notes at: http://rdegges.com/deploying-django
+
+Purpose
+====
 
 Essentially--deploying Django projects is hard. There are lots of things you
 need to take into consideration. Being a Django user for years, I believe I've
@@ -30,14 +30,10 @@ This project is meant to be a boilerplate project for starting development. It
 is heavily opinionated in terms of services and tools--but I think the tradeoff
 is worthwhile.
 
-
 Docs
 ====
 
-The full project documentation is hosted at RTFD: http://django-skel.rtfd.org/.
-They are continuously updated to reflect changes and information about the
-project, so be sure to read them before using this boilerplate.
-
+The original project documentation is hosted at RTFD: http://django-skel.rtfd.org/.
 
 Install
 =======
