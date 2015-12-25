@@ -47,44 +47,44 @@ This assumes you are using virtualenvwrapper:
     (env) $ pip install Django==1.8
 
     (env) $ django-admin.py startproject --template=https://github.com/wmfox3/django-skel/zipball/1.8 woot
-    (env) $ heroku config:add DJANGO_SETTINGS_MODULE=myproject.settings.prod
-
 
 Where  ``env`` is the environment and ``woot`` is the name of the project you'd like to create.
 
 This is possible because Django 1.8's ``startproject`` command allows you to
 fetch a project template over HTTP (which is what we're doing here).
 
-While not strictly required, it is also recommended to do
+The next thing you’ll probably want to do is remove my project docs:
 
-     $ heroku config:add SECRET_KEY=putsomethingfairlycomplexhere
-
-The production settings pull SECRET_KEY from environment but fallbacks
-to a value which is generated mainly for development environment.
-
-This setup allows you to easily keep your site in a public repo if you so
-wish without causing opening a route to attack your Django passwords.
-
-CD to the project directory and remove the unnecessary README.md and docs directory
-
-    (env) $ cd woot
     (env) $ rm -rf docs README.md
 
-Create your first app:
+That way you don’t get the documentation you’re reading right now in your new project.
+
+Next, create your first django app for this project:
 
     (env) $ $ mkdir woot/apps/myapp
     (env) $ $ django-admin.py startapp myapp woot/apps/myapp
 
-Now's a good time to initialize the git repository:
+Now's a good time to initialize the git repository and commit everything:
 
     (env) $ $ git init
     (env) Initialized empty Git repository in /home/rdegges/Code/ex/woot/.git/
     (env) $ git add .; git commit -m 'First commit using django-skel!'
     ...
 
-Install the development requirements:
+Install all the dependancies needed to run the development site:
 
     (env) $ pip install -r reqs/dev.txt
+
+If the pip command above fails, it means you’re missing some C libraries that are required for some 
+of the Python libraries to work. The ones you need (on Ubuntu) are:
+
+    libevent-dev
+    libpq-dev
+    libmemcached-dev
+    zlib1g-dev
+    libssl-dev
+    python-dev
+    build-essential
 
 Initialize the Django database (Django 1.8 uses migrate):
 
