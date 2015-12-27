@@ -21,6 +21,7 @@ SITE_NAME = basename(DJANGO_ROOT)
 # Add our project to our pythonpath, this way we don't need to type our project
 # name in our dotted import paths:
 path.append(DJANGO_ROOT)
+#sys.path.append( os.path.join( PROJECT_PATH, 'misc' ) )
 ########## END PATH CONFIGURATION
 
 
@@ -91,7 +92,9 @@ MEDIA_URL = '/media/'
 
 ########## STATIC FILE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = normpath(join(DJANGO_ROOT, 'static'))
+#STATIC_ROOT = normpath(join(DJANGO_ROOT, 'static'))
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = normpath(join(DJANGO_ROOT, 'staticfiles'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
@@ -263,6 +266,14 @@ WSGI_APPLICATION = 'wsgi.application'
 ########## COMPRESSION CONFIGURATION
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
 COMPRESS_ENABLED = True
+COMPRESS_URL = STATIC_URL
+
+#Note that misc.compressor_filters.PatchedSCSSCompiler and misc.compressor_filters.CustomCssAbsoluteFilter
+#are custom classes available at compressor_filters.py. Copy them to your project. They fix issues from django-compressor.
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'misc.compressor_filters.PatchedSCSSCompiler'),
+)
 
 # See: http://django-compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_HASHING_METHOD
 COMPRESS_CSS_HASHING_METHOD = 'content'
@@ -270,6 +281,7 @@ COMPRESS_CSS_HASHING_METHOD = 'content'
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.template.TemplateFilter',
+    'misc.compressor_filters.CustomCssAbsoluteFilter',
 ]
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
@@ -283,9 +295,12 @@ COMPRESS_JS_FILTERS = [
 
 BOWER_PATH = '/usr/local/bin/bower'
 
-BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'static'))
+#BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'static'))
+#BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
+BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'components'))
 
 BOWER_INSTALLED_APPS = (
     'bootstrap',
+    'bootstrap-sass-official#3.3.1'
 )
 ########## END BOWER CONFIGURATION
