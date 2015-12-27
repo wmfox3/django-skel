@@ -9,6 +9,7 @@ from S3 import CallingFormat
 
 from common import *
 
+from decouple import config, Csv
 
 ########## EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
@@ -82,15 +83,25 @@ INSTALLED_APPS += (
 )
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+#STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = 'misc.custom_storages.StaticCachedS3BotoStorage'
+DEFAULT_FILE_STORAGE = 'misc.custom_storages.MediaS3BotoStorage'
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
 AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID', '')
-AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY', '')
-AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+#AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID', '')
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+#AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY', '')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+#AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+
+AWS_S3_CUSTOM_DOMAIN = '{0}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
 
@@ -102,7 +113,9 @@ AWS_HEADERS = {
 }
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+#STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = 'https://{0}/static/'.format(AWS_S3_CUSTOM_DOMAIN)
+MEDIA_URL = 'https://{0}/media/'.format(AWS_S3_CUSTOM_DOMAIN)
 ########## END STORAGE CONFIGURATION
 
 
@@ -111,12 +124,13 @@ STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
 COMPRESS_OFFLINE = True
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_STORAGE
-COMPRESS_STORAGE = DEFAULT_FILE_STORAGE
+COMPRESS_STORAGE = STATICFILES_STORAGE
+COMPRESS_URL = STATIC_URL
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
-COMPRESS_CSS_FILTERS += [
-    'compressor.filters.cssmin.CSSMinFilter',
-]
+#COMPRESS_CSS_FILTERS += [
+#    'compressor.filters.cssmin.CSSMinFilter',
+#]
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
 COMPRESS_JS_FILTERS += [
@@ -132,6 +146,6 @@ SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 
 ########## ALLOWED HOSTS CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.herokuapp.com']
+#ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 ########## END ALLOWED HOST CONFIGURATION
-

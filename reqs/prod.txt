@@ -3,9 +3,12 @@ boto==2.9.5
 cssmin==0.1.4
 django-heroku-memcacheify==0.4
 django-heroku-postgresify==0.3
-django-storages==1.1.4
+#django-storages==1.1.4
+django-storages-redux==1.3 #Successfully installed django-storages-redux-1.3
+django-toolbelt==0.0.1 #Successfully installed dj-static-0.0.6 django-toolbelt-0.0.1 static3-0.6.1
 gevent==1.0.2
 gunicorn==0.14.3
 jsmin==2.0.3
 newrelic==2.60.0.46
 psycopg2==2.5
+python-decouple==3.0 #Successfully installed python-decouple-3.0
