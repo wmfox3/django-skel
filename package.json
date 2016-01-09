@@ -1,5 +1,5 @@
 {
-  "name": "{{ project_name }}",
+  "name": "newwoot",
   "version": "0.0.1",
   "private": true,
   "scripts": {
