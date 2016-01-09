@@ -311,7 +311,7 @@ BOWER_PATH = '/usr/local/bin/bower'
 
 #BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'static'))
 #BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'components'))
-BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'assets'))
+BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'staticfiles'))
 
 BOWER_INSTALLED_APPS = (
     'bootstrap',
