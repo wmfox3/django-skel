@@ -5,7 +5,7 @@ from os import environ
 
 from memcacheify import memcacheify
 from postgresify import postgresify
-from S3 import CallingFormat
+#from S3 import CallingFormat
 
 from common import *
 
@@ -90,7 +90,7 @@ DEFAULT_FILE_STORAGE = 'misc.custom_storages.MediaS3BotoStorage'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
+#AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
 #AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID', '')
@@ -116,6 +116,7 @@ AWS_HEADERS = {
 #STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
 STATIC_URL = 'https://{0}/static/'.format(AWS_S3_CUSTOM_DOMAIN)
 MEDIA_URL = 'https://{0}/media/'.format(AWS_S3_CUSTOM_DOMAIN)
+
 ########## END STORAGE CONFIGURATION
 
 
@@ -138,6 +139,10 @@ COMPRESS_JS_FILTERS += [
 ]
 ########## END COMPRESSION CONFIGURATION
 
+########## BOWER CONFIGURATION
+# perhaps the heroku bower path needs to be different from the dev path
+BOWER_PATH = '/app/node_modules/.bin/bower'
+########## END BOWER CONFIGURATION
 
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -146,6 +151,6 @@ SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 
 ########## ALLOWED HOSTS CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-#ALLOWED_HOSTS = ['.herokuapp.com']
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ['.herokuapp.com']
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 ########## END ALLOWED HOST CONFIGURATION

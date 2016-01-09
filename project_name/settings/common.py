@@ -97,12 +97,26 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = normpath(join(DJANGO_ROOT, 'staticfiles'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = '/static/'
+STATIC_URL = '/assets/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
     normpath(join(DJANGO_ROOT, 'assets')),
+    # normpath(join(DJANGO_ROOT, 'staticfiles')),
 )
+
+
+#DJANGO_ROOT = os.path.dirname(os.path.abspath(__file__))
+#STATIC_ROOT = 'staticfiles'
+#STATIC_URL = '/static/'
+
+#STATICFILES_DIRS = (
+#    os.path.join(DJANGO_ROOT, 'static'),
+#)
+
+
+
+
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
@@ -116,7 +130,7 @@ STATICFILES_FINDERS = (
 
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = r"{{ secret_key }}"
+SECRET_KEY = r"%(eop(kiz)rybm$nl-fy49)h)98pkdk$%y=lq-e37ddv57efug"
 ########## END SECRET CONFIGURATION
 
 
@@ -296,8 +310,8 @@ COMPRESS_JS_FILTERS = [
 BOWER_PATH = '/usr/local/bin/bower'
 
 #BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'static'))
-#BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
-BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'components'))
+#BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'components'))
+BOWER_COMPONENTS_ROOT = normpath(join(DJANGO_ROOT, 'assets'))
 
 BOWER_INSTALLED_APPS = (
     'bootstrap',
