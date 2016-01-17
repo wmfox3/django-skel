@@ -9,12 +9,12 @@ from fabric.api import abort, env, local, settings, task
 env.run = 'heroku run python manage.py'
 HEROKU_ADDONS = (
     'cloudamqp:lemur',
-    'heroku-postgresql:dev',
+    'heroku-postgresql:hobby-dev',
     'scheduler:standard',
     'memcachier:dev',
-    'newrelic:standard',
-    'pgbackups:auto-month',
-    'sentry:developer',
+    'newrelic:wayne',
+    #'pgbackups:auto-month',
+    #'sentry:developer',
 )
 HEROKU_CONFIGS = (
     'DJANGO_SETTINGS_MODULE={{ project_name }}.settings.prod',
@@ -22,6 +22,12 @@ HEROKU_CONFIGS = (
     'AWS_ACCESS_KEY_ID=xxx',
     'AWS_SECRET_ACCESS_KEY=xxx',
     'AWS_STORAGE_BUCKET_NAME=xxx',
+    'NEW_RELIC_APP_NAME={{ project_name }}',
+)
+HEROKU_BUILDPACKS = (
+    'set heroku/python',
+    'add heroku/nodejs',
+    'add https://github.com/vintasoftware/heroku-buildpack-python-with-django-bower.git',
 )
 ########## END GLOBALS
 
@@ -53,10 +59,12 @@ def cont(cmd, message):
 
 ########## DATABASE MANAGEMENT
 @task
+'''
+# deprecated by newer versions of Django
 def syncdb():
     """Run a syncdb."""
     local('%(run)s syncdb --noinput' % env)
-
+'''
 
 @task
 def migrate(app=None):
@@ -69,6 +77,10 @@ def migrate(app=None):
         local('%s migrate %s --noinput' % (env.run, app))
     else:
         local('%(run)s migrate --noinput' % env)
+
+@task
+def createsuperuser():
+    local('%s createsuperuser' % env.run)
 ########## END DATABASE MANAGEMENT
 
 
@@ -77,6 +89,12 @@ def migrate(app=None):
 def collectstatic():
     """Collect all static files, and copy them to S3 for production usage."""
     local('%(run)s collectstatic --noinput' % env)
+
+@task
+def compress():
+    """Compress all files to CACHE."""
+    local('%s compress' % env.env)
+
 ########## END FILE MANAGEMENT
 
 
@@ -102,11 +120,16 @@ def bootstrap():
         cont('heroku config:add %s' % config,
             "Couldn't add %s to your Heroku app, continue anyway?" % config)
 
+    for addon in HEROKU_BUILDPACKS:
+        cont('heroku buildpacks:%s' % addon,
+            "Couldn't %s buildpack for your Heroku app, continue anyway?" % addon)
+
     cont('git push heroku master',
             "Couldn't push your application to Heroku, continue anyway?")
 
-    syncdb()
+    #syncdb()
     migrate()
+    createsuperuser()
 
     cont('%(run)s newrelic-admin validate-config - stdout' % env,
             "Couldn't initialize New Relic, continue anyway?")
