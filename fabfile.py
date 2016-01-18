@@ -59,12 +59,9 @@ def cont(cmd, message):
 
 ########## DATABASE MANAGEMENT
 @task
-'''
-# deprecated by newer versions of Django
 def syncdb():
     """Run a syncdb."""
     local('%(run)s syncdb --noinput' % env)
-'''
 
 @task
 def migrate(app=None):
