@@ -1,11 +1,12 @@
 Django==1.8
 dj-database-url #added for GeoDjango functionality
+celery==3.1.0
 django-celery==3.1.17 #Successfully installed django-celery celery kombu pytz billiard amqp anyjson
 django-compressor==2.1 #Successfully installed django-compressor django-appconf six
 Fabric==1.12.0 #Successfully installed Fabric paramiko pycrypto ecdsa
 Sphinx==1.4.8 #Successfully installed Sphinx babel Jinja2 alabaster sphinx-rtd-theme Pygments snowballstemmer docutils MarkupSafe
 django-bower==5.2.0 # learn more at https://django-bower.readthedocs.org/en/latest/usage.html
-django-debug-toolbar==1.6 #Successfully installed django-debug-toolbar sqlparse
+#django-debug-toolbar==1.6 #Successfully installed django-debug-toolbar sqlparse
 django-libsass==0.6
 psycopg2
 
