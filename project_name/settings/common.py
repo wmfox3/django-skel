@@ -1,9 +1,4 @@
 """Common settings and globals."""
-# MAGIC HACK: without this, a recent Homebrew update broke GDAL!
-GDAL_LIBRARY_PATH = "/usr/local/lib/libgdal.dylib"
-import ctypes
-ctypes.CDLL(GDAL_LIBRARY_PATH)
-
 from datetime import timedelta
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path

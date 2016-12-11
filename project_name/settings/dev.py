@@ -1,5 +1,8 @@
 """Development settings and globals."""
-
+# MAGIC HACK: without this, a recent Homebrew update broke GDAL!
+GDAL_LIBRARY_PATH = "/usr/local/lib/libgdal.dylib"
+import ctypes
+ctypes.CDLL(GDAL_LIBRARY_PATH)
 
 from os.path import join, normpath
 
@@ -60,6 +63,7 @@ CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
     'debug_toolbar',
+    'django.contrib.gis',
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
