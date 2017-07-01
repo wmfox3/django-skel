@@ -154,3 +154,7 @@ SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 ALLOWED_HOSTS = ['.herokuapp.com']
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 ########## END ALLOWED HOST CONFIGURATION
+
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
